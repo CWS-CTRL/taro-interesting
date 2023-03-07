@@ -1,0 +1,26 @@
+@import "./assets/css/icon.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-reset {
+  @apply m-0 p-0 text-center;
+}
+
+.len-8 {
+  @apply w-8 h-8;
+}
+
+.full {
+  @apply w-full h-full;
+}
+
+.screen {
+  @apply w-screen h-screen;
+}
+
+/* tailwind border不生效，用常规样式 */
+.border-default {
+  border: 2px solid #ccc;
+}
