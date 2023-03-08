@@ -10,13 +10,12 @@ import KlotskiLogic from "./composables/logic";
 import Countdown from "@/utils/countdown";
 
 const klotskiLogic = new KlotskiLogic();
-const state = klotskiLogic.state;
 const countdown = new Countdown();
 const mode: modeType[] = ["New", "Easy", "Medium", "Hard"];
 const containerClass = [, , "grid-cols-2 grid-rows-2", "grid-cols-3 grid-rows-3", "grid-cols-4 grid-rows-4", "grid-cols-5 grid-rows-5", "grid-cols-6 grid-rows-6"];
 
 function Klotski() {
-  const [data, setData] = useState(state);
+  const [data, setData] = useState(klotskiLogic.state);
   const { board, width, height, gameState, step } = data;
 
   if (gameState === "Lose" || gameState === "Win") {

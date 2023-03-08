@@ -10,17 +10,16 @@ import MinesLogic from "./composables/logic";
 import Countdown from "@/utils/countdown";
 
 const minesLogic = new MinesLogic();
-const state = minesLogic.state;
 const countdown = new Countdown();
 const mode: modeType[] = ["New", "Easy", "Medium", "Hard"];
 const numColor = ["", "text-teal-300", "text-teal-400", "text-green-400", "text-green-600", "text-orange-400", "text-orange-600", "text-red-400", "text-red-600"]
 
 function MineClearance() {
-  const [data, setData] = useState(state);
+  const [data, setData] = useState(minesLogic.state);
   const { board, mines, markNum, gameState } = data;
 
   if (gameState === "Win" || gameState === "Lose") {
-    data.time = countdown.getSec();
+    minesLogic.state.time = countdown.getSec();
   }
 
   useLoad(() => {
@@ -40,8 +39,7 @@ function MineClearance() {
         {mode.map(title => <Button className="basis-14 btn-reset len-8 leading-6 bg-teal-500 text-white" onTap={() => {
           countdown.reset();
           minesLogic.seleteMode(title);
-          setData({ ...minesLogic.state })
-
+          setData({ ...minesLogic.state });
         }}><Text className="text-xs">{title}</Text></Button>)}
       </View>
       <View className="flex justify-evenly mb-4">
