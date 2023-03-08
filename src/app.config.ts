@@ -12,4 +12,22 @@ export default defineAppConfig({
     navigationBarTitleText: "WeChat",
     navigationBarTextStyle: "black",
   },
+  tabBar: {
+    color: "#aaabbb",
+    selectedColor: "#000000",
+    list: [
+      {
+        pagePath: "pages/gameSundry/index",
+        text: "game",
+        iconPath: "./assets/image/tabbar/game.png",
+        selectedIconPath: "./assets/image/tabbar/game-active.png",
+      },
+      {
+        pagePath: "pages/canvasSundry/index",
+        text: "figure",
+        iconPath: "./assets/image/tabbar/figure.png",
+        selectedIconPath: "./assets/image/tabbar/figure-active.png",
+      },
+    ],
+  },
 });
