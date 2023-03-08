@@ -1,11 +1,12 @@
 export default defineAppConfig({
   pages: [
+    "pages/gameMineClearance/index",
+
     "pages/canvasSquare/index",
 
     "pages/gameSundry/index",
 
     "pages/gameKlotski/index",
-    "pages/gameMineClearance/index",
     "pages/canvasSundry/index",
   ],
   window: {

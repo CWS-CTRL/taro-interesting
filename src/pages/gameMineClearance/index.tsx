@@ -24,7 +24,10 @@ function MineClearance() {
   }
 
   useLoad(() => {
-    gameState === "Play" && countdown.continue();
+    if (gameState === "Play") {
+      countdown.continue();
+      setData({ ...minesLogic.state })
+    }
   })
 
   useUnload(() => {
@@ -36,7 +39,9 @@ function MineClearance() {
       <View className="flex justify-evenly mb-4 text-xs">
         {mode.map(title => <Button className="basis-14 btn-reset len-8 leading-6 bg-teal-500 text-white" onTap={() => {
           countdown.reset();
-          minesLogic.seleteMode(title, setData);
+          minesLogic.seleteMode(title);
+          setData({ ...minesLogic.state })
+
         }}><Text className="text-xs">{title}</Text></Button>)}
       </View>
       <View className="flex justify-evenly mb-4">
@@ -53,11 +58,13 @@ function MineClearance() {
 
               onTap={() => {
                 gameState === "Ready" && countdown.create();
-                minesLogic.onTap(mine, setData);
+                minesLogic.onTap(mine);
+                setData({ ...minesLogic.state })
               }}
 
               onLongPress={() => {
-                minesLogic.onLongPress(mine, setData);
+                minesLogic.onLongPress(mine);
+                setData({ ...minesLogic.state })
               }}
               key={`${mx}.${my}`}>{isOpen
                 ? <View>{isMine

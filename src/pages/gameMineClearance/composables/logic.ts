@@ -1,4 +1,3 @@
-// import getType from "@/utils/getType";
 import type { modeType, gameStateType } from "@/types/gameType";
 
 const direction = [
@@ -36,12 +35,31 @@ interface State {
   time: number;
 }
 
-//有大量待优化的地方
 class MinesLogic {
   public state: State;
 
   constructor() {
     this.seleteMode("Easy");
+  }
+
+  //选择模式
+  seleteMode(mode: modeType = "Easy") {
+    switch (mode) {
+      case "New":
+        this.seleteMode(this.mode);
+        break;
+      case "Easy":
+        this.reset(9, 9, 10, "Easy");
+        break;
+      case "Medium":
+        this.reset(9, 28, 40, "Medium");
+        break;
+      case "Hard":
+        this.reset(9, 53, 99, "Hard");
+        break;
+      default:
+        this.reset(9, 9, 10, "Easy");
+    }
   }
 
   //初始化棋盘相关数据
@@ -69,11 +87,6 @@ class MinesLogic {
       minesBlock: [] as mineState[],
       time: 0,
     };
-
-    this.width = width;
-    this.height = height;
-    this.mines = mines;
-    this.mode = mode;
   }
 
   //生成地雷
@@ -153,6 +166,7 @@ class MinesLogic {
   }
 
   //游戏胜利条件
+  //翻开所有非雷的点
   isWin() {
     return !this.boards.some((mine: mineState) => !mine.isMine && !mine.isOpen);
   }
@@ -167,39 +181,17 @@ class MinesLogic {
         console.log("win");
         break;
       default:
-        let unknown: never;
+        let errr: never;
     }
   }
 
   //判断这个点是否可以触发事件
   triggerEvent(mine: mineState) {
-    const { gameState, isMinesGenerate, board } = this.state;
-    if (mine.isOpen || gameState === "Win" || gameState === "Lose") {
+    if (mine.isOpen || this.gameState === "Win" || this.gameState === "Lose") {
       return false;
     }
 
     return true;
-  }
-
-  //选择模式
-  seleteMode(mode: modeType = "Easy", setData?: Function) {
-    switch (mode) {
-      case "New":
-        this.seleteMode(this.state.mode, setData);
-        break;
-      case "Easy":
-        this.reset(9, 9, 10, "Easy");
-        break;
-      case "Medium":
-        this.reset(9, 28, 40, "Medium");
-        break;
-      case "Hard":
-        this.reset(9, 53, 99, "Hard");
-        break;
-      default:
-        this.reset(9, 9, 10, "Easy");
-    }
-    setData && this.setToData(this.state, setData);
   }
 
   //获取插旗点
@@ -208,25 +200,22 @@ class MinesLogic {
   }
 
   //点击事件
-  onTap(mine: mineState, setData) {
-    const { gameState, isMinesGenerate, board } = this.state;
-
+  onTap(mine: mineState) {
     if (!this.triggerEvent(mine)) return;
-    if (gameState === "Ready") {
-      // this.endTime = this.startTime = getSeconds(Date.now());
+    if (this.gameState === "Ready") {
       this.state.isMinesGenerate = true;
       this.minesGenerate(mine);
       this.getSiblingsMines();
-      this.state.gameState = "Play";
+      this.gameState = "Play";
     }
 
     this.openPoint(mine);
+    this.markNum = this.getMarkNums();
 
     //判断游戏失败
     if (mine.isMine) {
       this.openMine();
-      this.state.gameState = "Lose";
-      this.setToData(this.state, setData);
+      this.gameState = "Lose";
       this.gameOver("lose");
       return;
     }
@@ -235,25 +224,20 @@ class MinesLogic {
 
     //判断游戏胜利
     if (this.isWin()) {
-      this.state.gameState = "Win";
-      this.setToData(this.state, setData);
+      this.gameState = "Win";
       this.gameOver("win");
       return;
     }
-
-    this.setToData(this.state, setData);
   }
 
   //长按事件
-  onLongPress(mine: mineState, setData) {
-    const { gameState } = this.state;
-    if (!this.triggerEvent(mine) || gameState === "Ready") return;
+  onLongPress(mine: mineState) {
+    if (!this.triggerEvent(mine) || this.gameState === "Ready") return;
 
     mine.longPressState = (mine.longPressState + 1) % 3;
     mine.isMark = !!(mine.longPressState & 1);
     mine.isDoubt = !!(mine.longPressState & 2);
-
-    this.setToData(this.state, setData);
+    this.markNum = this.getMarkNums();
 
     // 0  0
     // 1  0
@@ -266,13 +250,7 @@ class MinesLogic {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
-  //react 执行useState使页面重新渲染
-  setToData(data: State, setData) {
-    // this.endTime = getSeconds(Date.now());
-    data.markNum = this.getMarkNums();
-    setData({ ...data });
-  }
-
+  //考虑下面大量的get set是否可以使用代理实现
   get mode() {
     return this.state.mode;
   }
@@ -303,6 +281,22 @@ class MinesLogic {
 
   set mines(newVal) {
     this.state.mines = newVal;
+  }
+
+  get markNum() {
+    return this.state.markNum;
+  }
+
+  set markNum(newVal) {
+    this.state.markNum = newVal;
+  }
+
+  get gameState() {
+    return this.state.gameState;
+  }
+
+  set gameState(newVal) {
+    this.state.gameState = newVal;
   }
 
   get board() {
