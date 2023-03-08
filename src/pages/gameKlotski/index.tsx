@@ -20,6 +20,7 @@ function Klotski() {
 
   if (gameState === "Lose" || gameState === "Win") {
     klotskiLogic.state.time = countdown.getSec();
+    countdown.pause();
   }
 
   useLoad(() => {

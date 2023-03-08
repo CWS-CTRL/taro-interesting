@@ -20,6 +20,7 @@ function MineClearance() {
 
   if (gameState === "Win" || gameState === "Lose") {
     minesLogic.state.time = countdown.getSec();
+    countdown.pause();
   }
 
   useLoad(() => {
