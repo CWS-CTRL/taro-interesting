@@ -17,15 +17,19 @@ function CanvasSquare() {
       squares.push(new SquareLogic(ctx, offsetX + len * i, 0, len, colors[i], 0.6 - Math.pow(i - 2, 2) * 0.1));
     }
 
+    let count = 0;
     (function move() {
       requestAnimationFrame(() => {
         ctx.clearRect(0, 0, 320, 504);
-        for (let i = 0; i < squares.length; i++) {
-          squares[i].move();
-          squares[i].drawSquare();
-          squares[i].drawGrid();
+        count++;
+        if (count % 6 === 0) {
+          for (let i = 0; i < squares.length; i++) {
+            squares[i].move();
+            squares[i].drawSquare();
+            squares[i].drawGrid();
+          }
+          ctx.draw();
         }
-        ctx.draw();
       });
       move();
     })();

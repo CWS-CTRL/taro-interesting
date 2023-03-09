@@ -1,99 +1,103 @@
 import React, { useState } from "react";
 import { useLoad, useUnload, useDidShow, createCanvasContext } from "@tarojs/taro";
+import type { CanvasContext } from "@tarojs/taro";
 import useScreenWH from "@/hooks/useScreenWH";
-import { View, Canvas } from "@tarojs/components";
+import { View, Canvas, Button } from "@tarojs/components";
 
-interface Point {
-  x: number
-  y: number
-}
-interface Branch {
-  start: Point
-  length: number
-  theta: number
-}
+
+// interface pointType {
+//   x: number;
+//   y: number;
+// }
+
+// interface branchType {
+//   start: pointType;
+//   len: number;
+//   angle: number;
+// }
+
+
+
+let ctx: CanvasContext;
+let init: Function;
 
 function CanvasPlum() {
-  const [data, setData] = useState([]);
-
   useDidShow(() => {
+    ctx = createCanvasContext("canvas");
+    let steps: Function[] = [];
+    let prevSteps: Function[] = [];
+    let len = 5;
+    let deps = 5;
+    let _deps = 0;
+    let count = 0;
 
-    const ctx = createCanvasContext("canvas");
-
-    function init() {
-      ctx.strokeStyle = '#000000'
-      step({
-        start: { x: 0, y: 0 },
-        length: 10,
-        theta: Math.PI / 4,
-      })
-    }
-    let pendingTasks: Function[] = []
-    function step(b: Branch, depth = 0) {
-      const end = getEndPoint(b)
-      drawBranch(b)
-      if (depth < 4 || Math.random() < 0.5) {
-        pendingTasks.push(() => {
-          step({
-            start: end,
-            length: b.length + (Math.random() * 2 - 1),
-            theta: b.theta - 0.2 * Math.random(),
-          }, depth + 1)
-        })
-      }
-      if (depth < 4 || Math.random() < 0.5) {
-        pendingTasks.push(() => {
-          step({
-            start: end,
-            length: b.length + (Math.random() * 2 - 1),
-            theta: b.theta + 0.2 * Math.random(),
-          }, depth + 1)
-        })
-      }
-    }
-    function frame() {
-      const tasks: Function[] = []
-      pendingTasks = pendingTasks.filter((i) => {
-        if (Math.random() > 0.4) {
-          tasks.push(i)
-          return false
-        }
-        return true
-      })
-      tasks.forEach(fn => fn())
-    }
-    let framesCount = 0
-    function startFrame() {
-      requestAnimationFrame(() => {
-        framesCount += 1
-        if (framesCount % 3 === 0)
-          frame()
-        startFrame()
-
-      })
-    }
-    startFrame()
-    function lineTo(p1: Point, p2: Point) {
-      ctx.beginPath()
-      ctx.moveTo(p1.x, p1.y)
-      ctx.lineTo(p2.x, p2.y)
-      ctx.stroke()
-      //保存上次绘画的结果，需传入参数true
-      ctx.draw(true)
-    }
-    function getEndPoint(b: Branch): Point {
+    function getNextPoint(x: number, y: number, length: number, angle: number) {
       return {
-        x: b.start.x + b.length * Math.cos(b.theta),
-        y: b.start.y + b.length * Math.sin(b.theta),
+        nx: x + Math.cos(angle) * length,
+        ny: y + Math.sin(angle) * length
       }
     }
-    function drawBranch(b: Branch) {
-      lineTo(b.start, getEndPoint(b))
+
+    function step(x: number, y: number, angle: number) {
+      const length = Math.random() * len;
+      const { nx, ny } = getNextPoint(x, y, length, angle);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(nx, ny);
+      ctx.stroke();
+      ctx.draw(true);
+
+      const angle1 = angle + Math.random() * Math.PI / 24;
+      const angle2 = angle - Math.random() * Math.PI / 24;
+
+      if (_deps <= 5 || Math.random() < 0.5) {
+        steps.push(() => step(nx, ny, angle1));
+      }
+
+      if (_deps <= 5 || Math.random() < 0.5) {
+        steps.push(() => step(nx, ny, angle2));
+      }
     }
+
+    function frame() {
+      if (!steps.length) return;
+      count++;
+
+      requestAnimationFrame(() => {
+        if (count % 3 == 0) {
+          prevSteps = steps;
+          steps = [];
+          _deps++;
+          prevSteps.forEach(i => i());
+        }
+        frame();
+      })
+
+    }
+
+    init = function () {
+      _deps = 0;
+      ctx.clearRect(0, 0, 1000, 1000);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#000000";
+      steps = Math.random() < 0.5
+        ?
+        [() => step(0, Math.random() * 384, 0), () => step(300, Math.random() * 384, Math.PI / 2)]
+        :
+        [() => step(Math.random() * 300, 0, Math.PI / 4), () => step(Math.random() * 300, 384, -Math.PI / 4)];
+
+      frame()
+    }
+
     init();
   })
 
-  return <Canvas className="w-full h-96 border-default" id="canvas" canvasId="canvas" />
+
+
+  return <View>
+    <Canvas className="w-full h-96 border-default" id="canvas" canvasId="canvas" />
+    <Button onTap={(() => { init() })}>reset</Button>
+  </View>
 }
 
 export default CanvasPlum;
