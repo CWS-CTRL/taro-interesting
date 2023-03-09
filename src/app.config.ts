@@ -5,6 +5,7 @@ export default defineAppConfig({
     "pages/gameKlotski/index",
     "pages/canvasSundry/index",
     "pages/canvasSquare/index",
+    "pages/canvasPlum/index",
   ],
   window: {
     backgroundTextStyle: "light",

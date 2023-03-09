@@ -1,5 +1,5 @@
 import React from "react";
-import { createCanvasContext, useReady, createInnerAudioContext } from "@tarojs/taro";
+import { useDidShow, createCanvasContext, createInnerAudioContext } from "@tarojs/taro";
 import { View, Canvas } from "@tarojs/components";
 import useScreenWH from "@/hooks/useScreenWH";
 import SquareLogic from "./composables/logic";
@@ -7,14 +7,14 @@ import SquareLogic from "./composables/logic";
 function CanvasSquare() {
   const { w, h } = useScreenWH()
 
-  useReady(() => {
-    console.log("ready");
-
+  useDidShow(() => {
     const squares: any[] = [];
     const ctx = createCanvasContext("canvas");
+    const len = 50;
     const colors = ["#FFAC3F", "#FEFF00", "#E140FB", "#67EDAC", "#41C4FF"];
+    const offsetX = Math.floor((w - len * 5) / 2)
     for (let i = 0; i < 5; i++) {
-      squares.push(new SquareLogic(ctx, Math.floor(w / 5) * i + 8, 0, 50, colors[i], 1 - Math.pow(i - 2, 2) * 0.2));
+      squares.push(new SquareLogic(ctx, offsetX + len * i, 0, len, colors[i], 0.6 - Math.pow(i - 2, 2) * 0.1));
     }
 
     (function move() {
@@ -26,8 +26,8 @@ function CanvasSquare() {
           squares[i].drawGrid();
         }
         ctx.draw();
-        move();
       });
+      move();
     })();
 
     // const innerAudioContext = createInnerAudioContext();
@@ -39,12 +39,14 @@ function CanvasSquare() {
     // innerAudioContext.loop = true;
     // innerAudioContext.volume = 0.2;
     // innerAudioContext.onError((res) => {
+    //   console.log("错误");
+
     //   console.log(res.errMsg)
     //   console.log(res.errCode)
     // })
   })
 
-  return <Canvas className="screen" id="canvas" canvasId="canvas" />
+  return <Canvas className="screen mt-16" id="canvas" canvasId="canvas" />
 }
 
 export default CanvasSquare;

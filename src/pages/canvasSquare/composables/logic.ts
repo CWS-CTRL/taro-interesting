@@ -16,7 +16,7 @@ class SquareLogic {
   ) {
     const { screenWidth, screenHeight } = getSystemInfoSync();
     this.sx = screenWidth;
-    this.sy = screenHeight - 2 * this.len;
+    this.sy = Math.floor(screenHeight / 2);
     this.gx = this.x;
     this.gy = this.y;
   }
@@ -29,7 +29,7 @@ class SquareLogic {
     this.ctx.lineTo(this.gx + this.len, this.sy);
     this.ctx.lineTo(this.gx, this.sy);
     this.ctx.lineTo(this.gx, this.gy);
-    this.ctx.setStrokeStyle("#000000");
+    this.ctx.setStrokeStyle("rgba(0,0,0,0.3)");
     this.ctx.stroke();
   }
 
@@ -43,19 +43,8 @@ class SquareLogic {
 
   move() {
     this.y += this.speedY;
-    if (this.y >= this.sy - this.len) {
+    if (this.y >= this.sy - this.len || this.y <= 0) {
       this.speedY *= -1;
-      this.opacity = 0.2;
-      setTimeout(() => {
-        this.opacity = 1;
-      }, 150);
-    }
-    if (this.y <= 0) {
-      this.speedY *= -1;
-      this.opacity = 0.2;
-      setTimeout(() => {
-        this.opacity = 1;
-      }, 150);
     }
   }
 }
