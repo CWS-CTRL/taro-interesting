@@ -1,21 +1,21 @@
 import type { modeType, gameStateType } from "@/types/gameType";
 
-interface cardState {
+interface cardStateType {
   context: number | null;
 }
 
-interface State {
+interface stateType {
   mode: modeType;
   width: number;
   height: number;
   gameState: gameStateType;
-  board: cardState[][];
+  board: cardStateType[][];
   step: number;
   time: number;
 }
 
 class KlotskiLogic {
-  public state: State;
+  public state: stateType;
 
   constructor() {
     this.seleteMode("Easy");
@@ -91,7 +91,6 @@ class KlotskiLogic {
       return res;
     } else {
       const { bx } = this.findBlankCard() as { bx: number; by: number };
-
       return res + bx + 1;
     }
     return res;

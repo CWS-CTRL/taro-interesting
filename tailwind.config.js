@@ -1,9 +1,9 @@
 const range = (size) =>
-    Object.fromEntries(
-        [...Array(size).keys()]
-            .slice(1)
-            .map((i) => [`${i}_${size}`, `${(i / size) * 100}%`])
-    );
+  Object.fromEntries(
+    [...Array(size).keys()]
+      .slice(1)
+      .map((i) => [`${i}_${size}`, `${(i / size) * 100}%`])
+  );
 
 module.exports = {
   content: ["./src/**/*.{js,tx,tsx,jsx}"],

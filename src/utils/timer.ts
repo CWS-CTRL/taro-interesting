@@ -1,34 +1,6 @@
 import getSeconds from "./getSeconds";
 
-// class Countdown {
-//   public startTime: number = 0;
-//   public endTime: number = 0;
-//   public second: number = 0;
-//   t: NodeJS.Timer | null;
-
-//   constructor() {
-//     return this;
-//   }
-
-//   create() {
-//     this.startTime = this.endTime = +Date.now();
-//     this.t = setInterval(() => {
-//       this.endTime = +Date.now();
-//       this.second = getSeconds(this.endTime, this.startTime);
-//     });
-//   }
-
-//   reset() {
-//     this.t && clearInterval(this.t);
-//     this.create();
-//   }
-
-//   stop() {
-//     this.t && clearInterval(this.t);
-//   }
-// }
-
-class Countdown {
+class Timer {
   public startTime: number = 0;
   public endTime: number = 0;
   public second: number = 0;
@@ -65,4 +37,4 @@ class Countdown {
   }
 }
 
-export default Countdown;
+export default Timer;

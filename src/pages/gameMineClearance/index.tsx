@@ -7,45 +7,45 @@ import Time from "@/components/time";
 import type { modeType, gameStateType } from "@/types/gameType";
 
 import MinesLogic from "./composables/logic";
-import Countdown from "@/utils/countdown";
+import Timer from "@/utils/timer";
 
 const minesLogic = new MinesLogic();
-const countdown = new Countdown();
+const timer = new Timer();
 const mode: modeType[] = ["New", "Easy", "Medium", "Hard"];
 const numColor = ["", "text-teal-300", "text-teal-400", "text-green-400", "text-green-600", "text-orange-400", "text-orange-600", "text-red-400", "text-red-600"]
 
-function MineClearance() {
+function GameMineClearance() {
   const [data, setData] = useState(minesLogic.state);
   const { board, mines, markNum, gameState } = data;
 
   if (gameState === "Win" || gameState === "Lose") {
-    minesLogic.state.time = countdown.getSec();
-    countdown.pause();
+    minesLogic.state.time = timer.getSec();
+    timer.pause();
   }
 
   useLoad(() => {
     if (gameState === "Play") {
-      countdown.continue();
+      timer.continue();
       setData({ ...minesLogic.state })
     }
   })
 
   useUnload(() => {
-    gameState === "Play" && countdown.pause();
+    gameState === "Play" && timer.pause();
   })
 
   return (
     <View className="py-8">
       <View className="flex justify-evenly mb-4 text-xs">
         {mode.map(title => <Button className="basis-14 btn-reset len-8 leading-6 bg-teal-500 text-white" onTap={() => {
-          countdown.reset();
+          timer.reset();
           minesLogic.seleteMode(title);
           setData({ ...minesLogic.state });
         }}><Text className="text-xs">{title}</Text></Button>)}
       </View>
       <View className="flex justify-evenly mb-4">
         <GameState gameState={gameState} />
-        <Time isGo={data.gameState === "Play"} t={countdown} />
+        <Time isGo={data.gameState === "Play"} t={timer} />
         <View><Text className="iconfont icon-zhadan text-2xl" /><Text>{mines - markNum}</Text></View>
       </View>
       <View>
@@ -56,7 +56,7 @@ function MineClearance() {
               className="btn-reset len-8 leading-8"
 
               onTap={() => {
-                gameState === "Ready" && countdown.create();
+                gameState === "Ready" && timer.create();
                 minesLogic.onTap(mine);
                 setData({ ...minesLogic.state })
               }}
@@ -83,4 +83,4 @@ function MineClearance() {
   )
 }
 
-export default MineClearance;
+export default GameMineClearance;

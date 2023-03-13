@@ -1,0 +1,18 @@
+/* tailwind border不生效，用常规样式 */
+.border-default {
+  border: 2px solid #ccc;
+}
+
+@keyframes scale01 {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.scale01 {
+  animation: scale01 0.3s linear;
+}

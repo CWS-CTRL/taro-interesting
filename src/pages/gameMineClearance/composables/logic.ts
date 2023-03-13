@@ -1,17 +1,7 @@
+import generateRandom from "@/utils/generateRandom";
 import type { modeType, gameStateType } from "@/types/gameType";
 
-const direction = [
-  [-1, -1],
-  [0, -1],
-  [1, -1],
-  [-1, 0],
-  [1, 0],
-  [-1, 1],
-  [0, 1],
-  [1, 1],
-];
-
-interface mineState {
+interface mineStateType {
   x: number;
   y: number;
   isMark: Boolean; //是否插旗
@@ -22,7 +12,7 @@ interface mineState {
   isMine: Boolean; //是否是雷
 }
 
-interface State {
+interface stateType {
   mode: modeType;
   width: number;
   height: number;
@@ -30,13 +20,24 @@ interface State {
   markNum: number;
   gameState: gameStateType;
   isMinesGenerate: Boolean;
-  board: mineState[][];
-  minesBlock: mineState[];
+  board: mineStateType[][];
+  minesBlock: mineStateType[];
   time: number;
 }
 
+const around = [
+  [-1, -1],
+  [0, -1],
+  [1, -1],
+  [-1, 0],
+  [1, 0],
+  [-1, 1],
+  [0, 1],
+  [1, 1],
+];
+
 class MinesLogic {
-  public state: State;
+  public state: stateType;
 
   constructor() {
     this.seleteMode("Easy");
@@ -74,8 +75,8 @@ class MinesLogic {
       isMinesGenerate: false,
       board: Array.from({ length: height }, (block, x) =>
         Array.from({ length: width }, (mine, y) => ({
-          x: x,
-          y: y,
+          x,
+          y,
           isMark: false,
           isDoubt: false,
           longPressState: 0,
@@ -84,19 +85,19 @@ class MinesLogic {
           isMine: false,
         }))
       ),
-      minesBlock: [] as mineState[],
+      minesBlock: [] as mineStateType[],
       time: 0,
     };
   }
 
   //生成地雷
-  minesGenerate(mine: mineState) {
+  minesGenerate(mine: mineStateType) {
     const { x, y } = mine;
     let i = 0;
 
     while (i < this.mines) {
-      const rx = this.generateRandom(0, this.height);
-      const ry = this.generateRandom(0, this.width);
+      const rx = generateRandom(0, this.height);
+      const ry = generateRandom(0, this.width);
 
       if (
         !this.board[rx][ry].isMine &&
@@ -111,8 +112,8 @@ class MinesLogic {
   }
 
   //获取一个点其周围的点数据
-  getSiblings(mine: mineState) {
-    return direction
+  getSiblings(mine: mineStateType) {
+    return around
       .map(([dx, dy]) => {
         const x = mine.x + dx;
         const y = mine.y + dy;
@@ -122,7 +123,7 @@ class MinesLogic {
 
         return this.board[x][y];
       })
-      .filter(Boolean) as mineState[];
+      .filter(Boolean) as mineStateType[];
   }
 
   //获取一个非雷点周围的雷数
@@ -141,7 +142,7 @@ class MinesLogic {
   }
 
   //翻开一个周围雷数为零的点其周围的点
-  openZero(mine: mineState) {
+  openZero(mine: mineStateType) {
     if (mine.aroundMines !== 0) return;
 
     this.getSiblings(mine).forEach((_mine) => {
@@ -152,7 +153,7 @@ class MinesLogic {
   }
 
   //翻开点
-  openPoint(mine: mineState) {
+  openPoint(mine: mineStateType) {
     mine.isOpen = true;
     mine.isMark = false;
     mine.isDoubt = false;
@@ -168,7 +169,9 @@ class MinesLogic {
   //游戏胜利条件
   //翻开所有非雷的点
   isWin() {
-    return !this.boards.some((mine: mineState) => !mine.isMine && !mine.isOpen);
+    return !this.boards.some(
+      (mine: mineStateType) => !mine.isMine && !mine.isOpen
+    );
   }
 
   //判断游戏结束
@@ -186,7 +189,7 @@ class MinesLogic {
   }
 
   //判断这个点是否可以触发事件
-  triggerEvent(mine: mineState) {
+  triggerEvent(mine: mineStateType) {
     if (mine.isOpen || this.gameState === "Win" || this.gameState === "Lose") {
       return false;
     }
@@ -196,11 +199,11 @@ class MinesLogic {
 
   //获取插旗点
   getMarkNums(): number {
-    return this.boards.filter((mine: mineState) => mine.isMark).length;
+    return this.boards.filter((mine: mineStateType) => mine.isMark).length;
   }
 
   //点击事件
-  onTap(mine: mineState) {
+  onTap(mine: mineStateType) {
     if (!this.triggerEvent(mine)) return;
     if (this.gameState === "Ready") {
       this.state.isMinesGenerate = true;
@@ -231,7 +234,7 @@ class MinesLogic {
   }
 
   //长按事件
-  onLongPress(mine: mineState) {
+  onLongPress(mine: mineStateType) {
     if (!this.triggerEvent(mine) || this.gameState === "Ready") return;
 
     mine.longPressState = (mine.longPressState + 1) % 3;
@@ -243,11 +246,6 @@ class MinesLogic {
     // 1  0
     // 0  1
     // 0  0
-  }
-
-  //随机获取min，max之间的整数
-  generateRandom(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
   }
 
   //考虑下面大量的get set是否可以使用代理实现
