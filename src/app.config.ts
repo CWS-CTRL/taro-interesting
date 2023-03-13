@@ -1,9 +1,9 @@
 export default defineAppConfig({
   pages: [
-    "pages/game2048/index",
     "pages/gameSundry/index",
     "pages/gameMineClearance/index",
     "pages/gameKlotski/index",
+    "pages/game2048/index",
     "pages/canvasSundry/index",
     "pages/canvasSquare/index",
     "pages/canvasPlum/index",
