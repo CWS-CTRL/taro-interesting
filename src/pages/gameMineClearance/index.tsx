@@ -37,7 +37,7 @@ function GameMineClearance() {
   return (
     <View className="py-8">
       <View className="flex justify-evenly mb-4 text-xs">
-        {mode.map(title => <Button className="basis-14 btn-reset len-8 leading-6 bg-teal-500 text-white" onTap={() => {
+        {mode.map(title => <Button className="basis-14 btn-reset len-8 leading-6 bg-teal-500 text-white" key={title} onTap={() => {
           timer.reset();
           minesLogic.seleteMode(title);
           setData({ ...minesLogic.state });

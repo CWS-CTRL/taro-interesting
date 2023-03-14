@@ -31,26 +31,6 @@ const around = [
   [0, -1],
 ];
 
-const colors = [
-  "bg-stone-300",
-  "bg-stone-400",
-  "bg-stone-500",
-  "bg-orange-300",
-  "bg-orange-400",
-  "bg-orange-500",
-  "bg-orange-600",
-  "bg-amber-300",
-  "bg-amber-400",
-  "bg-amber-500",
-  "bg-amber-600",
-  "bg-fuchsia-500",
-  "bg-fuchsia-600",
-  "bg-red-500",
-  "bg-red-600",
-  "bg-stone-700",
-  "bg-stone-800",
-];
-
 class $2048Logic {
   public state: stateType;
 
