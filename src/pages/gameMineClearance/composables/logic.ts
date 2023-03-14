@@ -1,29 +1,6 @@
 import generateRandom from "@/utils/generateRandom";
 import type { modeType, gameStateType } from "@/types/gameType";
-
-interface mineStateType {
-  x: number;
-  y: number;
-  isMark: Boolean; //是否插旗
-  isDoubt: Boolean; //是否不确定
-  longPressState: number; //长按该点的状态(无,插旗,不确定)
-  isOpen: Boolean; //是否翻开
-  aroundMines: number; //周围雷数
-  isMine: Boolean; //是否是雷
-}
-
-interface stateType {
-  mode: modeType;
-  width: number;
-  height: number;
-  mines: number;
-  markNum: number;
-  gameState: gameStateType;
-  isMinesGenerate: Boolean;
-  board: mineStateType[][];
-  minesBlock: mineStateType[];
-  time: number;
-}
+import type { mineStateType, stateType } from "./types";
 
 const around = [
   [-1, -1],
@@ -40,14 +17,14 @@ class MinesLogic {
   public state: stateType;
 
   constructor() {
-    this.seleteMode("Easy");
+    this.selecteMode("Easy");
   }
 
   //选择模式
-  seleteMode(mode: modeType = "Easy") {
+  selecteMode(mode: modeType = "Easy") {
     switch (mode) {
       case "New":
-        this.seleteMode(this.mode);
+        this.selecteMode(this.mode);
         break;
       case "Easy":
         this.reset(9, 9, 10, "Easy");
