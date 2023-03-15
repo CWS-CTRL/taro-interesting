@@ -1,31 +1,18 @@
-import type { modeType, gameStateType } from "@/types/gameType";
-
-interface cardStateType {
-  context: number | null;
-}
-
-interface stateType {
-  mode: modeType;
-  width: number;
-  height: number;
-  gameState: gameStateType;
-  board: cardStateType[][];
-  step: number;
-  time: number;
-}
+import type { modeType } from "@/types/gameType";
+import { stateType } from "./types";
 
 class KlotskiLogic {
   public state: stateType;
 
   constructor() {
-    this.seleteMode("Easy");
+    this.selectMode("Easy");
   }
 
   //选择模式
-  seleteMode(mode: modeType = "Easy") {
+  selectMode(mode: modeType = "Easy") {
     switch (mode) {
       case "New":
-        this.seleteMode(this.mode);
+        this.selectMode(this.mode);
         break;
       case "Easy":
         this.reset(3, 3, "Easy");

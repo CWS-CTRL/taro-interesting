@@ -1,27 +1,6 @@
 import generateRandom from "@/utils/generateRandom";
-import type { gameStateType } from "@/types/gameType";
 
-type directionType = "Top" | "Right" | "Bottom" | "Left";
-
-interface coordType {
-  x: number;
-  y: number;
-}
-
-interface cardStateType {
-  context: number | null;
-  isNew: Boolean;
-}
-
-interface stateType {
-  width: number;
-  height: number;
-  gameState: gameStateType;
-  cards: cardStateType[][];
-  currentDirection: directionType | undefined;
-  newCard: cardStateType | undefined;
-  score: number;
-}
+import { directionType, coordType, cardStateType, stateType } from "./types";
 
 //t r b l
 const around = [

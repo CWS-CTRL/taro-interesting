@@ -2,17 +2,12 @@ import React from "react";
 
 import { View, Text } from "@tarojs/components";
 
-import { GameState, Time } from "@/components/index";
+import { GameState, Time } from "@/components";
 
-import type { modeType, gameStateType } from "@/types/gameType";
-
+import type { stateType } from "../../composables/types"
 
 interface propsType {
-  data: {
-    gameState: gameStateType;
-    mines: number;
-    markNum: number;
-  },
+  data: stateType;
   timer: Object
 }
 
@@ -22,7 +17,12 @@ function State(props: propsType) {
   return <View className="flex justify-evenly mb-4">
     <GameState gameState={gameState} />
     <Time isGo={gameState === "Play"} t={timer} />
-    <View><Text className="iconfont icon-zhadan text-2xl" /><Text>{mines - markNum}</Text></View>
+    <View><Text
+      className="iconfont icon-zhadan text-2xl" />
+      <Text>
+        {mines - markNum}
+      </Text>
+    </View>
   </View>
 }
 

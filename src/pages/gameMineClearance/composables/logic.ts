@@ -17,14 +17,14 @@ class MinesLogic {
   public state: stateType;
 
   constructor() {
-    this.selecteMode("Easy");
+    this.selectMode("Easy");
   }
 
   //选择模式
-  selecteMode(mode: modeType = "Easy") {
+  selectMode(mode: modeType = "Easy") {
     switch (mode) {
       case "New":
-        this.selecteMode(this.mode);
+        this.selectMode(this.mode);
         break;
       case "Easy":
         this.reset(9, 9, 10, "Easy");
@@ -226,6 +226,7 @@ class MinesLogic {
   }
 
   //考虑下面大量的get set是否可以使用代理实现
+  //使用代理ts会报一大堆错，暂时就这样
   get mode() {
     return this.state.mode;
   }

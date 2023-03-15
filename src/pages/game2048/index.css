@@ -1,0 +1,64 @@
+@keyframes scale01 {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.scale01 {
+  animation: scale01 0.3s linear;
+}
+.bg-2048-default {
+  background-color: rgb(214 211 209);
+}
+.bg-2048-2 {
+  background-color: rgb(168 162 158);
+}
+.bg-2048-4 {
+  background-color: rgb(120 113 108);
+}
+.bg-2048-8 {
+  background-color: rgb(252 211 77);
+}
+.bg-2048-16 {
+  background-color: rgb(251 191 36);
+}
+.bg-2048-32 {
+  background-color: rgb(245 158 11);
+}
+.bg-2048-64 {
+  background-color: rgb(217 119 6);
+}
+.bg-2048-128 {
+  background-color: rgb(253 186 116);
+}
+.bg-2048-256 {
+  background-color: rgb(251 146 60);
+}
+.bg-2048-512 {
+  background-color: rgb(249 115 22);
+}
+.bg-2048-1024 {
+  background-color: rgb(234 88 12);
+}
+.bg-2048-2048 {
+  background-color: rgb(217 70 239);
+}
+.bg-2048-4096 {
+  background-color: rgb(192 38 211);
+}
+.bg-2048-8192 {
+  background-color: rgb(239 68 68);
+}
+.bgck-2048-16384 {
+  background-color: rgb(220 38 38);
+}
+.bg-2048-32768 {
+  background-color: rgb(68 64 60);
+}
+.bg-2048-65536 {
+  background-color: rgb(41 37 36);
+}
