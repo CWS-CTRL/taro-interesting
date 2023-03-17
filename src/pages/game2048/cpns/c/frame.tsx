@@ -44,7 +44,7 @@ function Frame(props: propsType) {
     }}
   >{cards.map(cardsRow => cardsRow.map(({ context, isNew }) =>
     <View
-      className={`grid place-content-center full aspect-square font-bold text-3xl shadow-xl bg-2048-${context || `default`}  ${isNew ? `scale01` : ``}`}>
+      className={`grid place-content-center full aspect-square font-bold text-2xl shadow-xl bg-2048-${context || `default`}  ${isNew ? `scale01` : ``}`}>
       <View>
         {context}
       </View>

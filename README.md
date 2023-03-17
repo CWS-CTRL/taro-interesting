@@ -1,5 +1,23 @@
-# 目前游戏写了扫雷,数字华容道,2048
+# 游戏
 
-## canvas 写了碰撞（写星星太卡了，观感不好）,梅花生长
+## 扫雷
 
-### 持续更新......
+![扫雷](./src/assets/image/readme/minesClearance.jpg "扫雷")
+
+## 数字华容道
+
+![数字华容道](./src/assets/image/readme/klotski.jpg "数字华容道")
+
+## 2048
+
+![2048](./src/assets/image/readme/2048.jpg "2048")
+
+# Canvas
+
+## 碰撞
+
+![碰撞](./src/assets/image/readme/collision.jpg "碰撞")
+
+## 梅花生长
+
+![梅花生长](./src/assets/image/readme/plum.jpg "梅花生长")
