@@ -13,53 +13,53 @@
 }
 
 .bg-2048-default {
-  background-color: rgb(214 211 209);
+  background-color: #d2f4f5;
 }
 .bg-2048-2 {
-  background-color: rgb(168 162 158);
+  background-color: #9ff5f4;
 }
 .bg-2048-4 {
-  background-color: rgb(120 113 108);
+  background-color: #64d8f1;
 }
 .bg-2048-8 {
-  background-color: rgb(252 211 77);
+  background-color: #49a4eb;
 }
 .bg-2048-16 {
-  background-color: rgb(251 191 36);
+  background-color: #7d9ff7;
 }
 .bg-2048-32 {
-  background-color: rgb(245 158 11);
+  background-color: #3777db;
 }
 .bg-2048-64 {
-  background-color: rgb(217 119 6);
+  background-color: #374f8f;
 }
 .bg-2048-128 {
-  background-color: rgb(253 186 116);
+  background-color: #1c40de;
 }
 .bg-2048-256 {
-  background-color: rgb(251 146 60);
+  background-color: #5e55d4;
 }
 .bg-2048-512 {
-  background-color: rgb(249 115 22);
+  background-color: #9f81e2;
 }
 .bg-2048-1024 {
-  background-color: rgb(234 88 12);
+  background-color: #a667f6;
 }
 .bg-2048-2048 {
-  background-color: rgb(217 70 239);
+  background-color: #911cdd;
 }
 .bg-2048-4096 {
-  background-color: rgb(192 38 211);
+  background-color: #7d16e1;
 }
 .bg-2048-8192 {
-  background-color: rgb(239 68 68);
+  background-color: #7113f0;
 }
 .bgck-2048-16384 {
-  background-color: rgb(220 38 38);
+  background-color: #660ff4;
 }
 .bg-2048-32768 {
-  background-color: rgb(68 64 60);
+  background-color: #576ef2;
 }
 .bg-2048-65536 {
-  background-color: rgb(41 37 36);
+  background-color: #4e8df6;
 }

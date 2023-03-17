@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoad, createCanvasContext } from "@tarojs/taro";
+import { useLoad, createCanvasContext, canvasGetImageData } from "@tarojs/taro";
 import useScreenWH from "@/hooks/useScreenWH";
 
 import { View, Canvas, Button } from "@tarojs/components";
@@ -12,7 +12,20 @@ function CanvasPlum() {
   useLoad(() => {
     const ctx = createCanvasContext("canvas");
     plumLogic.init(ctx, w, 384)
-    ctx.draw(true);
+    ctx.draw(true)
+    setTimeout(() => {
+      canvasGetImageData({
+        canvasId: "canvas",
+        x: 0,
+        y: 0,
+        width: w,
+        height: 384,
+        success: (res) => {
+          console.log(res);
+
+        }
+      })
+    }, 1000)
   })
 
   return <View>
