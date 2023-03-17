@@ -22,7 +22,7 @@ class $2048Logic {
     this.reset();
   }
 
-  reset(width = 3, height = 3) {
+  reset(width = 4, height = 4) {
     this.state = {
       width,
       height,
@@ -68,7 +68,7 @@ class $2048Logic {
   }
 
   //验证空格
-  //     Top
+  //         Top
   //    1     2     3
   //    null  5     6   Yes
   //    7     8     9
@@ -205,7 +205,7 @@ class $2048Logic {
     return prevCard;
   }
 
-  //移动零
+  //移动零算法
   moveZero(
     occupyIndex: number,
     occupyCard: cardStateType,
@@ -223,6 +223,7 @@ class $2048Logic {
     return occupyIndex;
   }
 
+  //上移
   moveTop() {
     for (let i = 0; i < this.width; i++) {
       //合并相同的分数(只合并一层，如果合并之后的数与下一个数相同不会再次合并)
@@ -242,6 +243,7 @@ class $2048Logic {
     }
   }
 
+  //右移
   moveRight() {
     for (let i = 0; i < this.height; i++) {
       const cardsRow = this.cards[i];
@@ -260,6 +262,7 @@ class $2048Logic {
     }
   }
 
+  //下移
   moveBottom() {
     for (let i = 0; i < this.width; i++) {
       let prevCard;
@@ -277,6 +280,7 @@ class $2048Logic {
     }
   }
 
+  //左移
   moveLeft() {
     for (let i = 0; i < this.height; i++) {
       const cardsRow = this.cards[i];

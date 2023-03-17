@@ -6,6 +6,8 @@ import getSlipDirection from "@/utils/getSlipDirection";
 
 import type { stateType } from "../../composables/types";
 
+import "../../index.css"
+
 let startPageXY = { pageX: 0, pageY: 0 };
 let endPageXY = { pageX: 0, pageY: 0 };
 const getPageXY = (e) => {
@@ -28,7 +30,7 @@ function Frame(props: propsType) {
   const { cards } = logicObj.state;
 
   return <View
-    className="grid grid-cols-3 grid-cols-3 w-full gap-2 box-border mt-10 p-2 bg-slate-200"
+    className="grid grid-cols-4 grid-cols-4 w-full gap-2 box-border mt-10 p-2 bg-slate-200"
     onTouchStart={(e) => {
       startPageXY = getPageXY(e);
     }}
@@ -42,7 +44,7 @@ function Frame(props: propsType) {
     }}
   >{cards.map(cardsRow => cardsRow.map(({ context, isNew }) =>
     <View
-      className={`grid place-content-center full aspect-square font-bold text-3xl  bg-2048-${context || `default`}  ${isNew ? `scale01` : ``}`}>
+      className={`grid place-content-center full aspect-square font-bold text-3xl bg-2048-${context || `default`}  ${isNew ? `scale01` : ``}`}>
       <View>
         {context}
       </View>

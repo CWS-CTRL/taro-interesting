@@ -9,7 +9,7 @@ interface PageXY {
 function getSlipDirection(start: PageXY, end: PageXY): directionType {
   const offetX = end.pageX - start.pageX;
   const offsetY = end.pageY - start.pageY;
-  //xy轴偏移量需要多出至少百分之20才被判断滑动
+  //xy轴偏移量需要相差至少百分之20才被判断滑动
   if (offetX > 0 && offsetY > 0) {
     if (offetX / offsetY >= 1.2) return "Right";
     if (offsetY / offetX >= 1.2) return "Bottom";

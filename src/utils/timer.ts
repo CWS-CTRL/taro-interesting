@@ -1,5 +1,5 @@
 import getSeconds from "./getSeconds";
-
+//计时器
 class Timer {
   public startTime: number = 0;
   public endTime: number = 0;

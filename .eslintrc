@@ -6,6 +6,7 @@
     "import/no-commonjs": "off",
     "jsx-quotes": "off",
     "react/jsx-closing-bracket-location": "off",
-    "import/first": "off"
+    "import/first": "off",
+    "import/no-named-default": "off"
   }
 }

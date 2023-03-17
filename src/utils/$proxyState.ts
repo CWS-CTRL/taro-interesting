@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 class $proxyState {
   public keysStack: string[] = [];
 
