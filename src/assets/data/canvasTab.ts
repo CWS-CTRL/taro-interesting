@@ -1,7 +1,7 @@
 const canvasTabData = [
   {
-    title: "星星",
-    path: "/pages/canvasStars/index",
+    title: "碰撞",
+    path: "/pages/canvasCollision/index",
   },
   {
     title: "梅花生长",

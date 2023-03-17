@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: "canvas plum",
+  navigationBarTitleText: "梅花生长",
 };

@@ -21,6 +21,7 @@ interface optinosType {
 
 class MoveCircle {
   public optinos: optinosType;
+  public collisionFn: Function | null;
 
   constructor(options: _SelectRequired<optinosType, "ctx">) {
     const {
@@ -46,8 +47,8 @@ class MoveCircle {
       y: randomXY ? generateRandom(0, y) : y,
       color: randomColor ? $randomColor() : color,
       radius,
-      speedX: randomSpeed ? generateRandom(-speedX, speedX) : speedX,
-      speedY: randomSpeed ? generateRandom(-speedY, speedY) : speedY,
+      speedX: randomSpeed ? generateRandom(-speedX, speedX) || 3 : speedX,
+      speedY: randomSpeed ? generateRandom(-speedY, speedY) || 3 : speedY,
       randomColor,
       randomXY,
       randomSpeed,
@@ -68,8 +69,19 @@ class MoveCircle {
     this.x += this.speedX;
     this.y += this.speedY;
 
-    if (this.x <= 0 || this.x >= this.width) this.speedX *= -1;
-    if (this.y <= 0 || this.y >= this.height) this.speedY *= -1;
+    if (this.x <= this.radius || this.x >= this.width - this.radius) {
+      this.speedX *= -1;
+      this.collisionFn && this.collisionFn();
+    }
+
+    if (this.y <= this.radius || this.y >= this.height - this.radius) {
+      this.speedY *= -1;
+      this.collisionFn && this.collisionFn();
+    }
+  }
+
+  collision(fn: Function) {
+    this.collisionFn = fn;
   }
 
   get ctx() {
