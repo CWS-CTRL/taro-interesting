@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { View } from "@tarojs/components";
 import { Controls, State, Frame } from "./cpns";
+import dataStorage from "@/utils/dataStorage";
 
 import $2048Logic from "./composables/logic";
 

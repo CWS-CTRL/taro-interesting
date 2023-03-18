@@ -3,6 +3,7 @@ import { useLoad, useUnload } from "@tarojs/taro";
 
 import { View, } from "@tarojs/components";
 import { Controls, State, Frame } from "./cpns"
+import dataStorage from "@/utils/dataStorage";
 
 
 import MinesLogic from "./composables/logic";
@@ -13,7 +14,9 @@ const timer = new Timer();
 
 function GameMineClearance() {
   const [data, setData] = useState(minesLogic.state);
+
   const { gameState } = data;
+  console.log(gameState);
 
   if (gameState === "Win" || gameState === "Lose") {
     minesLogic.state.time = timer.getSec();

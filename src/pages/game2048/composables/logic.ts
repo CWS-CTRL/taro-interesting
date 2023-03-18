@@ -159,7 +159,7 @@ class $2048Logic {
   //判断胜利
   isWin() {
     return (
-      Math.max(...this.cardsFlat.map(({ context }) => Number(context))) === 2048
+      Math.max(...this.cardsFlat.map(({ context }) => Number(context))) >= 2048
     );
   }
 
